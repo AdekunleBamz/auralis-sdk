@@ -1,0 +1,51 @@
+{
+  "name": "@auralis/sdk",
+  "version": "0.1.0",
+  "description": "Reusable TypeScript SDK for Auralis MiniPay NFT minting, agent metadata, and Celo contract interaction.",
+  "type": "module",
+  "homepage": "https://github.com/adekunlebamz/auralis-sdk#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adekunlebamz/auralis-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/adekunlebamz/auralis-sdk/issues"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "contracts",
+    "docs",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "clean": "rm -rf dist",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "celo",
+    "minipay",
+    "nft",
+    "ai-agent",
+    "erc-721"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "viem": "^2.43.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "typescript": "^5.9.3"
+  }
+}
