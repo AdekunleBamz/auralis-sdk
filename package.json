@@ -1,5 +1,5 @@
 {
-  "name": "@auralis/sdk",
+  "name": "@bamzzstudio/auralis-sdk",
   "version": "0.1.0",
   "description": "Umbrella TypeScript SDK for Auralis MiniPay NFT minting, agent metadata, artwork, and Celo contract interaction.",
   "type": "module",
@@ -17,6 +17,9 @@
   "bugs": {
     "url": "https://github.com/adekunlebamz/auralis-sdk/issues"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -31,14 +34,6 @@
     "dist",
     "contracts",
     "docs",
-    "packages/core/dist",
-    "packages/core/package.json",
-    "packages/artifacts/dist",
-    "packages/artifacts/package.json",
-    "packages/contracts/dist",
-    "packages/contracts/package.json",
-    "packages/agent/dist",
-    "packages/agent/package.json",
     "README.md"
   ],
   "scripts": {
@@ -58,10 +53,10 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "@auralis/agent": "file:packages/agent",
-    "@auralis/artifacts": "file:packages/artifacts",
-    "@auralis/contracts": "file:packages/contracts",
-    "@auralis/core": "file:packages/core",
+    "@bamzzstudio/auralis-agent": "^0.1.0",
+    "@bamzzstudio/auralis-artifacts": "^0.1.0",
+    "@bamzzstudio/auralis-contracts": "^0.1.0",
+    "@bamzzstudio/auralis-core": "^0.1.0",
     "viem": "^2.43.0"
   },
   "devDependencies": {

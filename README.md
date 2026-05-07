@@ -12,18 +12,18 @@ This repo now contains five Auralis packages:
 
 | Package | Purpose |
 | --- | --- |
-| `@auralis/core` | Celo constants, stablecoin constants, prompt hashing, address validation, shared types, data URI helpers |
-| `@auralis/artifacts` | Deterministic SVG artwork and NFT metadata generation |
-| `@auralis/contracts` | Auralis ERC-721 ABI and Remix deployment defaults |
-| `@auralis/agent` | ERC-8004 registry constants, agent manifest helpers, compose receipts |
-| `@auralis/sdk` | Umbrella package that re-exports the others and adds wallet mint helpers |
+| `@bamzzstudio/auralis-core` | Celo constants, stablecoin constants, prompt hashing, address validation, shared types, data URI helpers |
+| `@bamzzstudio/auralis-artifacts` | Deterministic SVG artwork and NFT metadata generation |
+| `@bamzzstudio/auralis-contracts` | Auralis ERC-721 ABI and Remix deployment defaults |
+| `@bamzzstudio/auralis-agent` | ERC-8004 registry constants, agent manifest helpers, compose receipts |
+| `@bamzzstudio/auralis-sdk` | Umbrella package that re-exports the others and adds wallet mint helpers |
 
-The app can keep importing from `@auralis/sdk`, while the SDK package itself is composed from the smaller Auralis packages.
+The app can keep importing from `@bamzzstudio/auralis-sdk`, while the SDK package itself is composed from the smaller Auralis packages.
 
 ## Install
 
 ```bash
-npm install @auralis/sdk viem
+npm install @bamzzstudio/auralis-sdk viem
 ```
 
 For local development from the sibling app:
@@ -49,7 +49,7 @@ npm run clean
 ## Core Usage
 
 ```ts
-import { createAuralisDraft, mintAuralisNft } from "@auralis/sdk";
+import { createAuralisDraft, mintAuralisNft } from "@bamzzstudio/auralis-sdk";
 
 const draft = createAuralisDraft("a ceremonial badge for community builders");
 

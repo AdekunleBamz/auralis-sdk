@@ -1,8 +1,20 @@
 {
-  "name": "@auralis/contracts",
+  "name": "@bamzzstudio/auralis-contracts",
   "version": "0.1.0",
   "description": "Auralis contract ABI, deployment defaults, and Celo contract metadata.",
   "type": "module",
+  "homepage": "https://github.com/adekunlebamz/auralis-sdk/tree/main/packages/contracts#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adekunlebamz/auralis-sdk.git",
+    "directory": "packages/contracts"
+  },
+  "bugs": {
+    "url": "https://github.com/adekunlebamz/auralis-sdk/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -18,6 +30,13 @@
     "package.json"
   ],
   "license": "MIT",
+  "keywords": [
+    "auralis",
+    "celo",
+    "minipay",
+    "erc-721",
+    "abi"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.json",
     "typecheck": "tsc -p tsconfig.json --noEmit",

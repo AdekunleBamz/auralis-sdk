@@ -9,7 +9,7 @@ import {
   type AuralisDraft,
   type AuralisMetadataOptions,
   type Hex,
-} from "@auralis/core";
+} from "@bamzzstudio/auralis-core";
 
 const PALETTES = [
   ["#08111f", "#00b894", "#ffbe55", "#f85f73", "#eef7f2"],

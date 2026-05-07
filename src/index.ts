@@ -1,10 +1,10 @@
 import { getAddress, type Address, type Hex, type WalletClient } from "viem";
-import { AURALIS_NFT_ABI } from "@auralis/contracts";
+import { AURALIS_NFT_ABI } from "@bamzzstudio/auralis-contracts";
 
-export * from "@auralis/agent";
-export * from "@auralis/artifacts";
-export * from "@auralis/contracts";
-export * from "@auralis/core";
+export * from "@bamzzstudio/auralis-agent";
+export * from "@bamzzstudio/auralis-artifacts";
+export * from "@bamzzstudio/auralis-contracts";
+export * from "@bamzzstudio/auralis-core";
 
 export interface MintAuralisNftParams {
   walletClient: WalletClient;

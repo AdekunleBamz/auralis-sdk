@@ -1,4 +1,4 @@
-import { AURALIS_CHAIN, type Hex } from "@auralis/core";
+import { AURALIS_CHAIN, type Hex } from "@bamzzstudio/auralis-core";
 
 export const AURALIS_AGENT_NAME = "Auralis Agent";
 

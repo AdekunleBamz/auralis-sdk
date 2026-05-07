@@ -1,8 +1,20 @@
 {
-  "name": "@auralis/agent",
+  "name": "@bamzzstudio/auralis-agent",
   "version": "0.1.0",
   "description": "Auralis agent metadata helpers and ERC-8004 registry constants.",
   "type": "module",
+  "homepage": "https://github.com/adekunlebamz/auralis-sdk/tree/main/packages/agent#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adekunlebamz/auralis-sdk.git",
+    "directory": "packages/agent"
+  },
+  "bugs": {
+    "url": "https://github.com/adekunlebamz/auralis-sdk/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -18,8 +30,15 @@
     "package.json"
   ],
   "license": "MIT",
+  "keywords": [
+    "auralis",
+    "celo",
+    "minipay",
+    "erc-8004",
+    "ai-agent"
+  ],
   "dependencies": {
-    "@auralis/core": "file:../core"
+    "@bamzzstudio/auralis-core": "^0.1.0"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",

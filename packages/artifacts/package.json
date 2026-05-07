@@ -1,8 +1,20 @@
 {
-  "name": "@auralis/artifacts",
+  "name": "@bamzzstudio/auralis-artifacts",
   "version": "0.1.0",
   "description": "Auralis deterministic artwork and NFT metadata generation helpers.",
   "type": "module",
+  "homepage": "https://github.com/adekunlebamz/auralis-sdk/tree/main/packages/artifacts#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adekunlebamz/auralis-sdk.git",
+    "directory": "packages/artifacts"
+  },
+  "bugs": {
+    "url": "https://github.com/adekunlebamz/auralis-sdk/issues"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -18,8 +30,15 @@
     "package.json"
   ],
   "license": "MIT",
+  "keywords": [
+    "auralis",
+    "celo",
+    "minipay",
+    "nft",
+    "metadata"
+  ],
   "dependencies": {
-    "@auralis/core": "file:../core"
+    "@bamzzstudio/auralis-core": "^0.1.0"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",
