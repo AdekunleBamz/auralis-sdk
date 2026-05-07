@@ -12,12 +12,12 @@ import {
 } from "@bamzzstudio/auralis-core";
 
 const PALETTES = [
-  ["#08111f", "#00b894", "#ffbe55", "#f85f73", "#eef7f2"],
-  ["#101316", "#8fe388", "#f7cf5f", "#e85d75", "#f6f4ef"],
-  ["#15100f", "#35d0ba", "#f4a261", "#e76f51", "#fbfbf3"],
-  ["#111827", "#3ddc97", "#ffb703", "#fb7185", "#f7fee7"],
-  ["#0d1b1e", "#1dd3b0", "#ffd166", "#ef476f", "#f4f1de"],
-  ["#171219", "#4ecdc4", "#ffe66d", "#ff6b6b", "#f7fff7"],
+  ["#17212b", "#5de2b5", "#ffd166", "#ff7a90", "#ffe1ea", "#fffaf0", "#29435a"],
+  ["#20182d", "#8fd6ff", "#f9c74f", "#f28482", "#fce4ec", "#fff8f1", "#3a2b54"],
+  ["#12231f", "#7ae582", "#f6bd60", "#f76f8e", "#e8fff3", "#fffbea", "#24443e"],
+  ["#1f2937", "#a7f3d0", "#fbbf24", "#fb7185", "#ede9fe", "#fffdf4", "#334155"],
+  ["#261b2f", "#c4b5fd", "#fde68a", "#f0abfc", "#d9f99d", "#fff7ed", "#4c1d95"],
+  ["#102a43", "#67e8f9", "#fcd34d", "#fdba74", "#dbeafe", "#fffaf0", "#1e3a5f"],
 ] as const;
 
 const PREFIXES = [
@@ -72,7 +72,8 @@ export function createAuralisDraft(
   const attributes = [
     { trait_type: "Mood", value: mood },
     { trait_type: "Form", value: form },
-    { trait_type: "Palette", value: palette.slice(1, 4).join(" / ") },
+    { trait_type: "Palette", value: palette.slice(1, 5).join(" / ") },
+    { trait_type: "Style", value: "Modern sticker artifact" },
     { trait_type: "Prompt Hash", value: promptHash },
     { trait_type: "Agent", value: options.agentName ?? "Auralis Agent" },
   ];
@@ -123,51 +124,117 @@ export function createAuralisSvg(input: {
   palette: readonly string[];
 }): string {
   const bytes = hashBytes(input.promptHash);
-  const [ink, teal, amber, coral, paper] = input.palette;
-  const r1 = 150 + (bytes[4] % 100);
-  const r2 = 90 + (bytes[5] % 90);
-  const drift = bytes[6] % 48;
-  const spin = bytes[7] % 360;
+  const [ink, primary, secondary, accent, blush, paper, shade] = input.palette;
+  const drift = bytes[4] % 52;
+  const tilt = (bytes[5] % 17) - 8;
+  const faceMood = bytes[6] % 3;
+  const glyphSize = 92 + (bytes[7] % 26);
+  const cheek = 36 + (bytes[8] % 12);
   const glyph = input.form.slice(0, 1).toUpperCase();
   const safePrompt = escapeSvg(input.prompt);
   const safeName = escapeSvg(input.name);
+  const safeMood = escapeSvg(input.mood);
+  const safeForm = escapeSvg(input.form);
+  const promptLine = safePrompt.slice(0, 74);
 
-  const points = Array.from({ length: 10 }, (_, index) => {
-    const angle = (Math.PI * 2 * index) / 10 + spin / 180;
-    const radius = index % 2 === 0 ? r1 : r2;
-    const x = 500 + Math.cos(angle) * radius;
-    const y = 450 + Math.sin(angle) * radius;
-    return `${x.toFixed(1)},${y.toFixed(1)}`;
-  }).join(" ");
+  const sparkles = Array.from({ length: 18 }, (_, index) => {
+    const seed = bytes[(index + 9) % bytes.length];
+    const x = 74 + ((seed * 37 + index * 61) % 852);
+    const y = 74 + ((seed * 29 + index * 43) % 640);
+    const size = 8 + (seed % 17);
+    const opacity = (0.26 + (seed % 40) / 100).toFixed(2);
+
+    if (index % 3 === 0) {
+      return `<path d="M${x} ${y - size} L${x + size * 0.28} ${y - size * 0.28} L${x + size} ${y} L${x + size * 0.28} ${y + size * 0.28} L${x} ${y + size} L${x - size * 0.28} ${y + size * 0.28} L${x - size} ${y} L${x - size * 0.28} ${y - size * 0.28} Z" fill="${paper}" opacity="${opacity}"/>`;
+    }
+
+    return `<circle cx="${x}" cy="${y}" r="${(size / 3).toFixed(1)}" fill="${index % 2 === 0 ? secondary : accent}" opacity="${opacity}"/>`;
+  }).join("\n  ");
+
+  const accessory = (() => {
+    if (input.form === "Bloom") {
+      return `<g opacity="0.95">
+      <ellipse cx="390" cy="267" rx="50" ry="78" fill="${blush}" transform="rotate(-34 390 267)"/>
+      <ellipse cx="610" cy="267" rx="50" ry="78" fill="${blush}" transform="rotate(34 610 267)"/>
+      <ellipse cx="500" cy="221" rx="48" ry="72" fill="${secondary}"/>
+    </g>`;
+    }
+
+    if (input.form === "Halo" || input.form === "Pulse") {
+      return `<ellipse cx="500" cy="276" rx="184" ry="54" fill="none" stroke="${secondary}" stroke-width="24" opacity="0.88"/>`;
+    }
+
+    if (input.form === "Vessel" || input.form === "Relic") {
+      return `<path d="M392 251 H608 L570 318 H430 Z" fill="${secondary}" stroke="${paper}" stroke-width="12" stroke-linejoin="round"/>`;
+    }
+
+    return `<path d="M392 306 L435 232 L493 292 L560 222 L608 306 Z" fill="${secondary}" stroke="${paper}" stroke-width="12" stroke-linejoin="round"/>`;
+  })();
+
+  const mouth =
+    faceMood === 0
+      ? `<path d="M438 515 C472 566 532 566 566 515" fill="none" stroke="${ink}" stroke-width="18" stroke-linecap="round"/>`
+      : faceMood === 1
+        ? `<path d="M438 518 C470 548 536 548 568 518" fill="none" stroke="${ink}" stroke-width="16" stroke-linecap="round"/>`
+        : `<path d="M446 524 C486 510 524 548 562 524" fill="none" stroke="${ink}" stroke-width="16" stroke-linecap="round"/>`;
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1000" viewBox="0 0 1000 1000" role="img" aria-label="${safeName}">
   <defs>
-    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="${paper}"/>
-      <stop offset="0.52" stop-color="${teal}" stop-opacity="0.28"/>
-      <stop offset="1" stop-color="${coral}" stop-opacity="0.42"/>
+      <stop offset="0.44" stop-color="${blush}"/>
+      <stop offset="1" stop-color="${primary}"/>
     </linearGradient>
-    <radialGradient id="core" cx="50%" cy="48%" r="60%">
-      <stop offset="0" stop-color="${amber}"/>
-      <stop offset="0.48" stop-color="${teal}"/>
-      <stop offset="1" stop-color="${ink}"/>
+    <linearGradient id="card" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="${paper}" stop-opacity="0.98"/>
+      <stop offset="1" stop-color="${blush}" stop-opacity="0.9"/>
+    </linearGradient>
+    <radialGradient id="body" cx="42%" cy="32%" r="78%">
+      <stop offset="0" stop-color="${paper}"/>
+      <stop offset="0.45" stop-color="${primary}"/>
+      <stop offset="1" stop-color="${shade}"/>
     </radialGradient>
-    <filter id="softShadow" x="-20%" y="-20%" width="140%" height="140%">
+    <linearGradient id="footer" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="${ink}"/>
+      <stop offset="1" stop-color="${shade}"/>
+    </linearGradient>
+    <filter id="softShadow" x="-30%" y="-30%" width="160%" height="160%">
       <feDropShadow dx="0" dy="32" stdDeviation="24" flood-color="${ink}" flood-opacity="0.22"/>
     </filter>
+    <filter id="stickerShadow" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx="0" dy="22" stdDeviation="18" flood-color="${ink}" flood-opacity="0.18"/>
+    </filter>
   </defs>
-  <rect width="1000" height="1000" fill="url(#sky)"/>
-  <path d="M0 715 C185 ${620 + drift} 318 ${800 - drift} 500 705 C711 ${595 + drift} 836 ${768 - drift} 1000 642 L1000 1000 L0 1000 Z" fill="${ink}" opacity="0.92"/>
-  <circle cx="212" cy="220" r="${70 + (bytes[8] % 70)}" fill="${amber}" opacity="0.62"/>
-  <circle cx="796" cy="258" r="${42 + (bytes[9] % 62)}" fill="${coral}" opacity="0.56"/>
-  <g transform="rotate(${spin} 500 450)" filter="url(#softShadow)">
-    <polygon points="${points}" fill="url(#core)" stroke="${paper}" stroke-width="14" stroke-linejoin="round"/>
-    <circle cx="500" cy="450" r="${88 + (bytes[10] % 42)}" fill="${paper}" opacity="0.94"/>
-    <text x="500" y="486" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="108" font-weight="800" fill="${ink}">${glyph}</text>
+  <rect width="1000" height="1000" fill="url(#bg)"/>
+  <path d="M-20 736 C168 ${640 + drift} 298 ${789 - drift} 500 704 C706 ${618 + drift} 824 ${752 - drift} 1020 612 L1020 1000 L-20 1000 Z" fill="${ink}" opacity="0.9"/>
+  <path d="M66 168 C190 74 328 114 424 193 C548 295 682 218 794 122 C864 62 940 72 1004 116 L1004 0 L0 0 L0 238 C22 218 42 190 66 168 Z" fill="${paper}" opacity="0.34"/>
+  ${sparkles}
+  <g transform="rotate(${tilt} 500 444)" filter="url(#stickerShadow)">
+    <rect x="242" y="156" width="516" height="552" rx="164" fill="url(#card)" stroke="${paper}" stroke-width="18"/>
+    <rect x="292" y="206" width="416" height="416" rx="142" fill="${primary}" opacity="0.2"/>
+    ${accessory}
+    <path d="M334 456 C334 326 410 260 500 260 C590 260 666 326 666 456 C666 590 592 668 500 668 C408 668 334 590 334 456 Z" fill="url(#body)" stroke="${paper}" stroke-width="18"/>
+    <path d="M368 401 C405 312 482 290 555 312 C503 327 465 356 438 403 C420 435 389 442 368 401 Z" fill="${paper}" opacity="0.42"/>
+    <circle cx="422" cy="470" r="27" fill="${ink}"/>
+    <circle cx="578" cy="470" r="27" fill="${ink}"/>
+    <circle cx="413" cy="459" r="8" fill="${paper}"/>
+    <circle cx="569" cy="459" r="8" fill="${paper}"/>
+    <circle cx="382" cy="524" r="${cheek}" fill="${accent}" opacity="0.42"/>
+    <circle cx="618" cy="524" r="${cheek}" fill="${accent}" opacity="0.42"/>
+    ${mouth}
+    <g transform="translate(500 625)">
+      <rect x="-74" y="-58" width="148" height="104" rx="42" fill="${paper}" opacity="0.96"/>
+      <text x="0" y="22" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="${glyphSize}" font-weight="900" fill="${ink}">${glyph}</text>
+    </g>
+    <path d="M300 260 C338 190 404 174 456 205" fill="none" stroke="${paper}" stroke-width="24" stroke-linecap="round" opacity="0.65"/>
   </g>
-  <path d="M254 666 C354 590 443 696 523 632 C608 563 688 620 760 560" fill="none" stroke="${amber}" stroke-width="18" stroke-linecap="round" opacity="0.9"/>
-  <text x="84" y="835" font-family="Inter, Arial, sans-serif" font-size="50" font-weight="800" fill="${paper}">${safeName}</text>
-  <text x="84" y="893" font-family="Inter, Arial, sans-serif" font-size="27" font-weight="600" fill="${paper}" opacity="0.76">${escapeSvg(input.mood)} ${escapeSvg(input.form)} on Celo</text>
-  <text x="84" y="935" font-family="Inter, Arial, sans-serif" font-size="20" fill="${paper}" opacity="0.58">${safePrompt.slice(0, 82)}</text>
+  <g filter="url(#softShadow)">
+    <rect x="72" y="772" width="856" height="146" rx="44" fill="url(#footer)" opacity="0.94"/>
+    <rect x="95" y="794" width="102" height="102" rx="32" fill="${paper}" opacity="0.96"/>
+    <text x="146" y="861" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-size="58" font-weight="900" fill="${ink}">${glyph}</text>
+    <text x="226" y="833" font-family="Inter, Arial, sans-serif" font-size="42" font-weight="900" fill="${paper}">${safeName}</text>
+    <text x="226" y="875" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700" fill="${secondary}">${safeMood} ${safeForm} on Celo</text>
+    <text x="226" y="902" font-family="Inter, Arial, sans-serif" font-size="18" font-weight="600" fill="${paper}" opacity="0.58">${promptLine}</text>
+  </g>
 </svg>`;
 }
