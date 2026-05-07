@@ -1,6 +1,6 @@
 {
   "name": "@bamzzstudio/auralis-agent",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Auralis agent metadata helpers and ERC-8004 registry constants.",
   "type": "module",
   "homepage": "https://github.com/adekunlebamz/auralis-sdk/tree/main/packages/agent#readme",
@@ -38,7 +38,7 @@
     "ai-agent"
   ],
   "dependencies": {
-    "@bamzzstudio/auralis-core": "^0.1.0"
+    "@bamzzstudio/auralis-core": "^0.1.1"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",

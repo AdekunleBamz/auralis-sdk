@@ -1,6 +1,6 @@
 {
   "name": "@bamzzstudio/auralis-artifacts",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Auralis deterministic artwork and NFT metadata generation helpers.",
   "type": "module",
   "homepage": "https://github.com/adekunlebamz/auralis-sdk/tree/main/packages/artifacts#readme",
@@ -38,7 +38,7 @@
     "metadata"
   ],
   "dependencies": {
-    "@bamzzstudio/auralis-core": "^0.1.0"
+    "@bamzzstudio/auralis-core": "^0.1.1"
   },
   "scripts": {
     "build": "tsc -p tsconfig.json",

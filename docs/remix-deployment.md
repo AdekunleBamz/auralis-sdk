@@ -57,17 +57,27 @@ name_: Auralis
 symbol_: AURA
 initialOwner_: your deployer wallet address
 treasury_: your payout wallet address
-mintFeeWei_: 0
+mintFeeWei_: 2000000000000000
 ```
 
-Recommended for Proof of Ship: keep `mintFeeWei_` as `0` at first to reduce friction and maximize real user mints.
+Current deployed contract:
+
+```text
+0x3CB6e2fC05B6ab2A9BA2093418Befb0Ed2FE394F
+```
+
+The deployed contract can also be updated from Remix by calling:
+
+```text
+setMintFee(2000000000000000)
+```
 
 Optional paid mint examples:
 
 ```text
 0.001 CELO = 1000000000000000
+0.002 CELO = 2000000000000000
 0.01 CELO  = 10000000000000000
-0.05 CELO  = 50000000000000000
 ```
 
 ## 5. Contract Linking
@@ -81,7 +91,7 @@ Copy the deployed contract address into the Auralis app `.env.local`:
 ```bash
 NEXT_PUBLIC_AURALIS_NFT_ADDRESS=0xYourDeployedContract
 NEXT_PUBLIC_CELO_CHAIN_ID=42220
-NEXT_PUBLIC_AURALIS_MINT_FEE_WEI=0
+NEXT_PUBLIC_AURALIS_MINT_FEE_WEI=2000000000000000
 ```
 
 Restart the app after changing `.env.local`.
@@ -120,4 +130,18 @@ The app includes a starter agent file at:
 
 ```text
 public/.well-known/agent.json
+```
+
+## 9. MiniPay Stable Fees
+
+The deployed `AuralisGenesis` contract accepts CELO fees only. To enforce USDm payments for MiniPay, deploy:
+
+```text
+contracts/AuralisGenesisStable.sol
+```
+
+Guide:
+
+```text
+docs/stable-fees.md
 ```
