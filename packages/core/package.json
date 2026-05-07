@@ -1,0 +1,29 @@
+{
+  "name": "@auralis/core",
+  "version": "0.1.0",
+  "description": "Core Auralis constants, types, prompt hashing, address validation, and data URI helpers.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "package.json"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "viem": "^2.43.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "clean": "rm -rf dist"
+  }
+}

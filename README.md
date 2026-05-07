@@ -6,6 +6,20 @@ Auralis turns a short text seed into NFT metadata, deterministic SVG artwork, a 
 
 GitHub: https://github.com/adekunlebamz/auralis-sdk
 
+## Package Layout
+
+This repo now contains five Auralis packages:
+
+| Package | Purpose |
+| --- | --- |
+| `@auralis/core` | Celo constants, stablecoin constants, prompt hashing, address validation, shared types, data URI helpers |
+| `@auralis/artifacts` | Deterministic SVG artwork and NFT metadata generation |
+| `@auralis/contracts` | Auralis ERC-721 ABI and Remix deployment defaults |
+| `@auralis/agent` | ERC-8004 registry constants, agent manifest helpers, compose receipts |
+| `@auralis/sdk` | Umbrella package that re-exports the others and adds wallet mint helpers |
+
+The app can keep importing from `@auralis/sdk`, while the SDK package itself is composed from the smaller Auralis packages.
+
 ## Install
 
 ```bash
@@ -23,6 +37,13 @@ npm install ../auralis-sdk
 ```bash
 npm install
 npm run build
+```
+
+Useful package checks:
+
+```bash
+npm run typecheck
+npm run clean
 ```
 
 ## Core Usage

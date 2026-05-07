@@ -1,0 +1,26 @@
+{
+  "name": "@auralis/contracts",
+  "version": "0.1.0",
+  "description": "Auralis contract ABI, deployment defaults, and Celo contract metadata.",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "package.json"
+  ],
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "clean": "rm -rf dist"
+  }
+}
