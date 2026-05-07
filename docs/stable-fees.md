@@ -10,6 +10,12 @@ For MiniPay users who should pay the equivalent fee in USDm, deploy `AuralisGene
 /Users/apple/auralis-sdk/contracts/AuralisGenesisStable.sol
 ```
 
+Current deployed stable contract:
+
+```text
+0xd36cF3dD4F20CFCf19ED06b2fe089CBf07a94585
+```
+
 ## Recommended Constructor Values
 
 ```text
@@ -55,7 +61,7 @@ MiniPay users need two wallet confirmations:
 The app supports this once you set:
 
 ```bash
-NEXT_PUBLIC_AURALIS_STABLE_NFT_ADDRESS=0xYourStableContract
+NEXT_PUBLIC_AURALIS_STABLE_NFT_ADDRESS=0xd36cF3dD4F20CFCf19ED06b2fe089CBf07a94585
 NEXT_PUBLIC_AURALIS_STABLE_FEE_TOKEN=0x765DE816845861e75A25fCA122bb6898B8B1282a
 NEXT_PUBLIC_AURALIS_STABLE_FEE_AMOUNT=200000000000000
 NEXT_PUBLIC_AURALIS_STABLE_FEE_SYMBOL=USDm

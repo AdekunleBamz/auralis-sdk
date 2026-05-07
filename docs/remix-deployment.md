@@ -66,6 +66,12 @@ Current deployed contract:
 0x3CB6e2fC05B6ab2A9BA2093418Befb0Ed2FE394F
 ```
 
+Current deployed stable contract:
+
+```text
+0xd36cF3dD4F20CFCf19ED06b2fe089CBf07a94585
+```
+
 The deployed contract can also be updated from Remix by calling:
 
 ```text
@@ -92,6 +98,10 @@ Copy the deployed contract address into the Auralis app `.env.local`:
 NEXT_PUBLIC_AURALIS_NFT_ADDRESS=0xYourDeployedContract
 NEXT_PUBLIC_CELO_CHAIN_ID=42220
 NEXT_PUBLIC_AURALIS_MINT_FEE_WEI=2000000000000000
+NEXT_PUBLIC_AURALIS_STABLE_NFT_ADDRESS=0xd36cF3dD4F20CFCf19ED06b2fe089CBf07a94585
+NEXT_PUBLIC_AURALIS_STABLE_FEE_TOKEN=0x765DE816845861e75A25fCA122bb6898B8B1282a
+NEXT_PUBLIC_AURALIS_STABLE_FEE_AMOUNT=200000000000000
+NEXT_PUBLIC_AURALIS_STABLE_FEE_SYMBOL=USDm
 ```
 
 Restart the app after changing `.env.local`.
@@ -134,7 +144,7 @@ public/.well-known/agent.json
 
 ## 9. MiniPay Stable Fees
 
-The deployed `AuralisGenesis` contract accepts CELO fees only. To enforce USDm payments for MiniPay, deploy:
+The deployed `AuralisGenesis` contract accepts CELO fees only. MiniPay USDm payments use:
 
 ```text
 contracts/AuralisGenesisStable.sol
