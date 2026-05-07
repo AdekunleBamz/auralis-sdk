@@ -1,20 +1,17 @@
 # Remix Deployment Guide
 
-This guide is for deploying `AuralisGenesis.sol` manually from Remix.
+This guide is for deploying the Auralis contracts manually from Remix.
 
 ## 1. Open Remix
 
-Go to https://remix.ethereum.org and create a new file:
+Go to https://remix.ethereum.org and create a new file for the contract being deployed:
 
 ```text
 contracts/AuralisGenesis.sol
+contracts/AuralisGenesisStable.sol
 ```
 
-Paste the full contents of:
-
-```text
-auralis-sdk/contracts/AuralisGenesis.sol
-```
+Paste the full contents from the matching file in this repo's `contracts/` directory.
 
 ## 2. Compiler
 
@@ -27,14 +24,7 @@ Optimizer runs: 200
 EVM version: default
 ```
 
-Remix will resolve these OpenZeppelin imports automatically:
-
-```solidity
-@openzeppelin/contracts/access/Ownable.sol
-@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol
-```
-
-If Remix asks to install or fetch OpenZeppelin contracts, accept it.
+Remix will resolve OpenZeppelin imports automatically. If Remix asks to install or fetch OpenZeppelin contracts, accept it.
 
 ## 3. Network
 
@@ -46,59 +36,58 @@ Network: Celo Mainnet
 Chain ID: 42220
 ```
 
-Use a dedicated deployer wallet. Do not use a wallet holding important personal funds for development or testing.
+Use a dedicated deployment wallet with only the funds needed for deployment and testing.
 
 ## 4. Constructor Arguments
 
-Deploy `AuralisGenesis` with:
+Deploy `AuralisGenesis` for native CELO minting:
 
 ```text
 name_: Auralis
 symbol_: AURA
-initialOwner_: your deployer wallet address
-treasury_: your payout wallet address
+initialOwner_: <owner wallet address>
+treasury_: <treasury wallet address>
 mintFeeWei_: 2000000000000000
 ```
 
-Current deployed contract:
-
-```text
-0x3CB6e2fC05B6ab2A9BA2093418Befb0Ed2FE394F
-```
-
-Current deployed stable contract:
-
-```text
-0xd36cF3dD4F20CFCf19ED06b2fe089CBf07a94585
-```
-
-The deployed contract can also be updated from Remix by calling:
+If the native contract was deployed with a zero mint fee, update it from Remix:
 
 ```text
 setMintFee(2000000000000000)
 ```
 
-Optional paid mint examples:
+Deploy `AuralisGenesisStable` for MiniPay USDm minting:
 
 ```text
-0.001 CELO = 1000000000000000
+name_: Auralis
+symbol_: AURA
+initialOwner_: <owner wallet address>
+treasury_: <treasury wallet address>
+nativeMintFeeWei_: 2000000000000000
+stableFeeToken_: 0x765DE816845861e75A25fCA122bb6898B8B1282a
+stableMintFee_: 200000000000000
+```
+
+Fee reference:
+
+```text
 0.002 CELO = 2000000000000000
-0.01 CELO  = 10000000000000000
+0.0002 USDm = 200000000000000
 ```
 
 ## 5. Contract Linking
 
 No manual contract linking is required. OpenZeppelin dependencies are compiled into the final bytecode by Remix.
 
-## 6. After Deployment
+## 6. App Configuration
 
-Copy the deployed contract address into the Auralis app `.env.local`:
+Copy the deployed contract addresses into the app `.env.local`:
 
 ```bash
 NEXT_PUBLIC_AURALIS_NFT_ADDRESS=0xYourDeployedContract
 NEXT_PUBLIC_CELO_CHAIN_ID=42220
 NEXT_PUBLIC_AURALIS_MINT_FEE_WEI=2000000000000000
-NEXT_PUBLIC_AURALIS_STABLE_NFT_ADDRESS=0xd36cF3dD4F20CFCf19ED06b2fe089CBf07a94585
+NEXT_PUBLIC_AURALIS_STABLE_NFT_ADDRESS=0xYourStableDeployedContract
 NEXT_PUBLIC_AURALIS_STABLE_FEE_TOKEN=0x765DE816845861e75A25fCA122bb6898B8B1282a
 NEXT_PUBLIC_AURALIS_STABLE_FEE_AMOUNT=200000000000000
 NEXT_PUBLIC_AURALIS_STABLE_FEE_SYMBOL=USDm
@@ -115,16 +104,11 @@ Compiler: v0.8.24 or the exact compiler Remix used
 Optimization: enabled
 Runs: 200
 License: MIT
-Contract name: AuralisGenesis
-Constructor args:
-  "Auralis",
-  "AURA",
-  initialOwner_,
-  treasury_,
-  mintFeeWei_
+Contract name: AuralisGenesis or AuralisGenesisStable
+Constructor args: use the values from the Constructor Arguments section.
 ```
 
-Verification matters for Proof of Ship eligibility, so keep the compiler settings exactly aligned with Remix.
+Verification matters for public trust and ecosystem programs, so keep the compiler settings aligned with Remix.
 
 ## 8. Optional Agent Registration
 
@@ -144,13 +128,13 @@ public/.well-known/agent.json
 
 ## 9. MiniPay Stable Fees
 
-The deployed `AuralisGenesis` contract accepts CELO fees only. MiniPay USDm payments use:
+`AuralisGenesis` accepts CELO fees only. MiniPay USDm payments use:
 
 ```text
 contracts/AuralisGenesisStable.sol
 ```
 
-Guide:
+Stable fee notes are in:
 
 ```text
 docs/stable-fees.md
