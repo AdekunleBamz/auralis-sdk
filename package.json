@@ -1,6 +1,6 @@
 {
   "name": "@bamzzstudio/auralis-sdk",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Umbrella TypeScript SDK for Auralis MiniPay NFT minting, agent metadata, artwork, and Celo contract interaction.",
   "type": "module",
   "workspaces": [
