@@ -2,6 +2,7 @@
   "name": "@bamzzstudio/auralis-core",
   "version": "0.1.1",
   "description": "Core Auralis constants, types, prompt hashing, address validation, and data URI helpers.",
+  "author": "adekunlebamz",
   "type": "module",
   "homepage": "https://github.com/adekunlebamz/auralis-sdk/tree/main/packages/core#readme",
   "repository": {

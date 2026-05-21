@@ -2,6 +2,7 @@
   "name": "@bamzzstudio/auralis-contracts",
   "version": "0.1.1",
   "description": "Auralis contract ABI, deployment defaults, and Celo contract metadata.",
+  "author": "adekunlebamz",
   "type": "module",
   "homepage": "https://github.com/adekunlebamz/auralis-sdk/tree/main/packages/contracts#readme",
   "repository": {

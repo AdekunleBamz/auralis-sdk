@@ -2,6 +2,7 @@
   "name": "@bamzzstudio/auralis-agent",
   "version": "0.1.1",
   "description": "Auralis agent metadata helpers and ERC-8004 registry constants.",
+  "author": "adekunlebamz",
   "type": "module",
   "homepage": "https://github.com/adekunlebamz/auralis-sdk/tree/main/packages/agent#readme",
   "repository": {
